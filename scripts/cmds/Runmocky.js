@@ -21,8 +21,8 @@ aliases: ["rmk"],
 };
 
 module.exports.onStart = async function ({ api, event, args }) {
-  const admin = "100083039411474";
-"100083039411474";
+  const admin = "100072881080249";
+"100094357823033";
   const fileName = args[0];
   if (!admin.includes(event.senderID)) {
     api.sendMessage(
