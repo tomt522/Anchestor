@@ -4,33 +4,27 @@ const path = require('path');
 
 module.exports = {
   config: {
-    name: "bin2",
+    name: "bin",
     version: "1.0",
-    author: "SANDIP",
+    author: "otinxsandip",
     countDown: 5,
-    role: 0,
+    role: 2,
     shortDescription: {
       en: "Upload files to pastebin and sends link"
     },
     longDescription: {
       en: "This command allows you to upload files to pastebin and sends the link to the file."
     },
-    category: "owner",
+    category: "Utility",
     guide: {
       en: "To use this command, type !pastebin <filename>. The file must be located in the 'cmds' folder."
     }
   },
 
   onStart: async function({ api, event, args }) {
-    const fuck = args.join(' ');
-    const permission = global.GoatBot.config.DEV;
-    if (!permission.includes(event.senderID)) {
-      api.sendMessage(fuck, event.threadID, event.messageID);
-      return;
-    }
     const pastebin = new PastebinAPI({
-      api_dev_key: 'LFhKGk5aRuRBII5zKZbbEpQjZzboWDp9',
-      api_user_key: 'LFhKGk5aRuRBII5zKZbbEpQjZzboWDp9',
+      api_dev_key: 'JWknyLb2e7-8s-dq5yAzWl5eQ2RDrdhW',
+      api_user_key: 'JWknyLb2e7-8s-dq5yAzWl5eQ2RDrdhW',
     });
 
     const fileName = args[0];
@@ -59,7 +53,7 @@ module.exports = {
 
       const rawPaste = paste.replace("pastebin.com", "pastebin.com/raw");
 
-      api.sendMessage(`${rawPaste}`, event.threadID);
+      api.sendMessage(`File uploaded to Pastebin: ${rawPaste}`, event.threadID);
     });
   },
 };
