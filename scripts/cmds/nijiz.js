@@ -3,11 +3,11 @@ const { getStreamFromURL } = global.utils;
 
 module.exports = {
     config: {
-        name: "niji",
-        aliases: ["nijijourney", "art"],
+        name: "nijiz",
+        aliases: ["nijijourneyz"],
         version: "1.0",
         author: "rehat--",
-        countDown: 0,
+        countDown: 5,
         role: 0,
         longDescription: "Text to Image",
         category: "ai",
@@ -19,8 +19,9 @@ module.exports = {
     onStart: async function({ api, args, message, event }) {
         try {
             let prompt = "";
-            let imageUrl = "";
-            let aspectRatio = ""; 
+            let preset = "";
+            let style = "";
+            let aspectRatio = "1:1"; 
 
             const aspectIndex = args.indexOf("--ar");
             if (aspectIndex !== -1 && args.length > aspectIndex + 1) {
@@ -28,30 +29,35 @@ module.exports = {
                 args.splice(aspectIndex, 2); 
             }
 
-            if (event.type === "message_reply" && event.messageReply.attachments && event.messageReply.attachments.length > 0 && ["photo", "sticker"].includes(event.messageReply.attachments[0].type)) {
-                imageUrl = encodeURIComponent(event.messageReply.attachments[0].url);
-            } else if (args.length === 0) {
-                message.reply("Please provide a prompt or reply to an image.");
+            const presetIndex = args.indexOf("preset");
+            if (presetIndex !== -1 && args.length > presetIndex + 1) {
+                preset = args[presetIndex + 1];
+                args.splice(presetIndex, 2); 
+            }
+
+            const styleIndex = args.indexOf("style");
+            if (styleIndex !== -1 && args.length > styleIndex + 1) {
+                style = args[styleIndex + 1];
+                args.splice(styleIndex, 2); 
+            }
+
+            if (args.length === 0) {
+                message.reply("Please provide a prompt.");
                 return;
             }
-            
+
             if (args.length > 0) {
                 prompt = args.join(" ");
             }
 
-            
-            let apiUrl = `https://project-niji.onrender.com/api/v1/generate?prompt=${encodeURIComponent(prompt)}.&aspectRatio=${aspectRatio}&apikey=rehat`;
-            if (imageUrl) {
-                apiUrl += `&imageUrl=${imageUrl}`;
-            }
-
+            const apiUrl = `https://api-rehatdesu.onrender.com/api/imagine/nijiv2?prompt=${encodeURIComponent(prompt)}&preset=${encodeURIComponent(preset)}&style=${encodeURIComponent(style)}&aspectRatio=${encodeURIComponent(aspectRatio)}&apikey=gaysex`;
             const processingMessage = await message.reply("Please wait...⏳");
             const response = await axios.post(apiUrl);
             const img = response.data.url;
 
-            await message.reply({
+            await api.sendMessage({
                 attachment: await getStreamFromURL(img)
-            });
+            }, event.threadID, event.messageID);
 
         } catch (error) {
             console.error(error);
