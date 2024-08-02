@@ -1,43 +1,56 @@
-const axios = require('axios');
-const fs = require('fs');
-const path = require('path');
-
-// Obfuscated anti-author change system
-const _0x564d=["\x61\x75\x74\x68\x6F\x72","\x4D\x61\x68\x69\x2D\x2D","\x63\x6F\x6E\x66\x69\x67","\x67\x75\x69\x64","\x65\x6E","\x7B\x70\x6E\x7D\x20\x6E\x67\x65\x6E\x20\x3C\x70\x72\x6F\x6D\x70\x74\x3E","\x6E\x61\x6D\x65","\x6E\x67\x65\x6E","\x63\x6F\x75\x6E\x74\x44\x6F\x77\x6E","\x72\x6F\x6C\x65"];const antiAuthorChange={};antiAuthorChange[_0x564d[2]]={};antiAuthorChange[_0x564d[2]][_0x564d[6]]=_0x564d[7];antiAuthorChange[_0x564d[2]][_0x564d[0]]=_0x564d[1];antiAuthorChange[_0x564d[2]][_0x564d[8]]=5;antiAuthorChange[_0x564d[2]][_0x564d[9]]=0;antiAuthorChange[_0x564d[2]][_0x564d[3]]={};antiAuthorChange[_0x564d[2]][_0x564d[3]][_0x564d[4]]=_0x564d[5];
-
+const fs = require("fs");
+const path = require("path");
+const axios = require("axios");
+ 
 module.exports = {
   config: {
-    name: "ngen",
+    name: "marjia",
+    aliases: ['mrjen'],
     author: "Mahi--",
-    countDown: 5,
+    version: "1.0",
+    cooldowns: 20,
     role: 0,
-    guide: {
-      en: "{pn} ngen <prompt>"
-    }
+    shortDescription: "Generate an image based on a prompt.",
+    longDescription: "Generates an image using the provided prompt.",
+    category: "fun",
+    guide: "{p}marjia <prompt>",
   },
-
-  onStart: async function ({ args, message }) {
-    if (args.length === 0) {
-      return message.reply('Prompt required!');
+  onStart: async function ({ message, args, api, event }) {
+    // Obfuscated author name check
+    const obfuscatedAuthor = String.fromCharCode(77, 97, 104, 105, 45, 45);
+    if (this.config.author !== obfuscatedAuthor) {
+      return api.sendMessage("You are not authorized to change the author name.", event.threadID, event.messageID);
     }
-
+ 
     const prompt = args.join(" ");
-    const apiUrl = `https://asmit-docs.onrender.com/generate?prompt=${encodeURIComponent(prompt)}`;
-
-    try {
-      const response = await axios.get(apiUrl, { responseType: 'arraybuffer' });
-      const imageBuffer = Buffer.from(response.data, 'binary');
-      const imgPath = path.join(__dirname, 'generated_image.png');
-      fs.writeFileSync(imgPath, imageBuffer);
-      
-      const streamData = fs.createReadStream(imgPath);
-      message.reply({ attachment: streamData });
-    } catch (error) {
-      message.reply(`❌ | An error occurred. Please try again later.`);
+ 
+    if (!prompt) {
+      return api.sendMessage("❌ | You need to provide a prompt.", event.threadID);
     }
-  },
-
-  get config() {
-    return antiAuthorChange.config;
+ 
+    api.sendMessage("Please wait, we're making your picture...", event.threadID, event.messageID);
+ 
+    try {
+      const pixartApiUrl = `https://samirxpikachuio.onrender.com/marjia?prompt=${encodeURIComponent(prompt)}`;
+ 
+      const pixartResponse = await axios.get(pixartApiUrl, {
+        responseType: "arraybuffer"
+      });
+ 
+      const cacheFolderPath = path.join(__dirname, "cache");
+      if (!fs.existsSync(cacheFolderPath)) {
+        fs.mkdirSync(cacheFolderPath);
+      }
+      const imagePath = path.join(cacheFolderPath, `${Date.now()}_generated_image.png`);
+      fs.writeFileSync(imagePath, Buffer.from(pixartResponse.data, "binary"));
+ 
+      const stream = fs.createReadStream(imagePath);
+      message.reply({
+        body: "",
+        attachment: stream
+      });
+    } catch (error) {
+      console.error("Error:", error);
+      message.reply("❌ | An error occurred. Please try again later.");
+    }
   }
-};
