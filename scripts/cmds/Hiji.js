@@ -4,17 +4,17 @@ const path = require("path");
 
 module.exports = {
   config: {
-    name: "fiji",
+    name: "hiji",
     aliases: [],
     author: "Mahi--",
     version: "1.0",
     cooldowns: 20,
     role: 0,
-    shortDescription: "Generate an image using Fake Niji API.",
-    longDescription: "Generates an image based on the provided prompt using the Fake Niji API.",
+    shortDescription: "Generate an image using Hiji API.",
+    longDescription: "Generates an image based on the provided prompt using the Hiji API.",
     category: "fun",
     guide: {
-      en: "{p}fiji <prompt>"
+      en: "{p}hiji <prompt>"
     }
   },
   onStart: async function ({ message, args, api, event }) {
@@ -29,19 +29,19 @@ module.exports = {
     }
 
     const prompt = args.join(" ");
-    const fijiApiUrl = `https://upolatduck-apihub.onrender.com/fake-niji?prompt=${encodeURIComponent(prompt)}`;
+    const hijiApiUrl = `https://upoldev-apihub.onrender.com/upol/horny-niji?prompt=${encodeURIComponent(prompt)}&apikey=UPoLGitDev69`;
 
     api.sendMessage("⏳ | Please wait, we're making your picture.", event.threadID, event.messageID);
 
     try {
-      const fijiResponse = await axios.get(fijiApiUrl, { responseType: "arraybuffer" });
+      const hijiResponse = await axios.get(hijiApiUrl, { responseType: "arraybuffer" });
 
       const cacheFolderPath = path.join(__dirname, "/cache");
       if (!fs.existsSync(cacheFolderPath)) {
         fs.mkdirSync(cacheFolderPath);
       }
       const imagePath = path.join(cacheFolderPath, `${Date.now()}_generated_image.png`);
-      fs.writeFileSync(imagePath, Buffer.from(fijiResponse.data, "binary"));
+      fs.writeFileSync(imagePath, Buffer.from(hijiResponse.data, "binary"));
 
       const stream = fs.createReadStream(imagePath);
       message.reply({
