@@ -1,11 +1,11 @@
 const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
- 
+
 module.exports = {
   config: {
     name: "marjia",
-    aliases: ['mrjen'],
+    aliases: [],
     author: "Mahi--",
     version: "1.0",
     cooldowns: 20,
@@ -21,29 +21,29 @@ module.exports = {
     if (this.config.author !== obfuscatedAuthor) {
       return api.sendMessage("You are not authorized to change the author name.", event.threadID, event.messageID);
     }
- 
+
     const prompt = args.join(" ");
- 
+
     if (!prompt) {
       return api.sendMessage("❌ | You need to provide a prompt.", event.threadID);
     }
- 
+
     api.sendMessage("Please wait, we're making your picture...", event.threadID, event.messageID);
- 
+
     try {
-      const pixartApiUrl = `https://samirxpikachuio.onrender.com/marjia?prompt=${encodeURIComponent(prompt)}`;
- 
-      const pixartResponse = await axios.get(pixartApiUrl, {
+      const marjiaApiUrl = `https://samirxpikachuio.onrender.com/marjia?prompt=${encodeURIComponent(prompt)}`;
+
+      const marjiaResponse = await axios.get(marjiaApiUrl, {
         responseType: "arraybuffer"
       });
- 
+
       const cacheFolderPath = path.join(__dirname, "cache");
       if (!fs.existsSync(cacheFolderPath)) {
         fs.mkdirSync(cacheFolderPath);
       }
       const imagePath = path.join(cacheFolderPath, `${Date.now()}_generated_image.png`);
-      fs.writeFileSync(imagePath, Buffer.from(pixartResponse.data, "binary"));
- 
+      fs.writeFileSync(imagePath, Buffer.from(marjiaResponse.data, "binary"));
+
       const stream = fs.createReadStream(imagePath);
       message.reply({
         body: "",
@@ -54,3 +54,4 @@ module.exports = {
       message.reply("❌ | An error occurred. Please try again later.");
     }
   }
+};
