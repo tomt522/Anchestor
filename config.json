@@ -17,10 +17,10 @@
     "ignoreCommand": []
   },
   "adminBot": [
-    "100094357823033", "100072881080249", "61561931041153"],
+    "100094357823033", "100072881080249", "61563625146088"],
   "whiteListMode": {
     "enable": false,
-    "whiteListIds": ["100094357823033","100072881080249","61561931041153"],
+    "whiteListIds": ["100094357823033","100072881080249","61563625146088"],
     "notes": "if you enable this feature, only the ids in the whiteListIds section can use the bot"
   },
   "nickNameBot": " 𝘼𝙣𝙘𝙝𝙚𝙨𝙩𝙤𝙧 𝘼𝙞 ",
