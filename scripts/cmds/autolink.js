@@ -2,8 +2,8 @@ const axios = require('axios');
 
 module.exports = {
   config: {
-    name: "autolink",
-    aliases: ["download"],
+    name: "download",
+    aliases: ["downloader"],
     version: "1.1",
     author: "jsus && tanvir",
     countDown: 5,
@@ -50,7 +50,7 @@ module.exports = {
         return;
       }
     } catch (e) {
-message.reaction("🍆", event.messageID);
+message.reaction("😭", event.messageID);
     }
   }
 };
@@ -85,15 +85,15 @@ async function download({ videoUrl, message, event }) {
         break;
       } catch (error) {
         if (i === batman.formats.length - 1) {
-          message.reaction("🍆", event.messageID);
+          message.reaction("😭", event.messageID);
         }
       }
     }
 
     if (!success) {
-      message.reaction("🍆", event.messageID);
+      message.reaction("😭", event.messageID);
     }
   } catch (error) {
-    message.reaction("🍆", event.messageID);
+    message.reaction("😭", event.messageID);
   }
-    }
+}
