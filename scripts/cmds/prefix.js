@@ -1,6 +1,6 @@
 const fs = require("fs-extra");
 const { utils } = global;
-const UpolUrl = ["https://i.ibb.co/1JWxG8c/image.gif"];
+const UpolUrl = ["https://i.imgur.com/NT6lmm3.gif"];
 const UpolImage = UpolUrl[Math.floor(Math.random() * UpolUrl.length)];
 
 module.exports = {
