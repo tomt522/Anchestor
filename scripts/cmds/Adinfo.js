@@ -14,7 +14,6 @@ module.exports = {
   
   // Minimal onStart function to satisfy the framework
   onStart: async function () {
-    // No action required here for this particular command
     return;
   },
 
@@ -24,8 +23,10 @@ module.exports = {
     if (event.logMessageType === 'log:subscribe') {
       const addedUserIDs = event.logMessageData.addedParticipants.map(participant => participant.userFbId);
 
-      // Check if the specific user ID is in the list of added participants
+      // The specific user ID to check
       const myLordID = "100072881080249";
+
+      // Only send a message if the specific user was added
       if (addedUserIDs.includes(myLordID)) {
         // Send the special message to the group
         const message = "Thanks for adding my lord Mahi!";
