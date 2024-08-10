@@ -7,7 +7,7 @@ const fs = require("fs-extra");
     aliases: ["rpair"],
     version: "1.0",
     author: "RUBISH",
-    countDown: 60,
+    countDown: 20,
     role: 0,
     shortDescription: "Pairing command with multiple types",
     longDescription: "This command allows you to create random pairs with various types. Specify the pair type using the {pn} <pairType> command, or leave it blank to get a random pair.",
