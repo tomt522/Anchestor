@@ -17,14 +17,14 @@
     "ignoreCommand": []
   },
   "adminBot": [
-    "100094357823033", "100072881080249", "61563625146088"],
+    "61559427406776", "", ""],
   "whiteListMode": {
     "enable": false,
-    "whiteListIds": ["100094357823033","100072881080249","61563625146088"],
+    "whiteListIds": ["61559427406776","",""],
     "notes": "if you enable this feature, only the ids in the whiteListIds section can use the bot"
   },
-  "nickNameBot": " 𝘼𝙣𝙘𝙝𝙚𝙨𝙩𝙤𝙧 𝘼𝙞 ",
-  "prefix": "/",
+  "nickNameBot": "  𝙃ō𝙩𝙖𝙧ō 𝙊𝙧𝙚𝙠𝙞  ",
+  "prefix": ".",
   "database": {
     "type": "sqlite",
     "uriMongodb": "",
